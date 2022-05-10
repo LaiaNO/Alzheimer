@@ -1,0 +1,5 @@
+@media screen and (max-width: 100px) {
+    .navbar {
+      color: red; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+  }
