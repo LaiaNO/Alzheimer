@@ -1,4 +1,11 @@
 
+#renderCanvasInstructions {
+    width: 90%;
+    height: 50%;
+    touch-action: none;
+    margin-top: -140px;
+}
+
 .bd-placeholder-img {
 font-size: 1.125rem;
 text-anchor: middle;
