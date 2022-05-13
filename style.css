@@ -1,12 +1,12 @@
 
 #renderCanvasInstructions {
-    width: 100%;
+    width: 80%;
     height: 100%;
     touch-action: none;
 }
 
 .badaligment{
-  margin-top: -40%;
+  margin-top: 0%;
   text-align: center; 
 }
 
