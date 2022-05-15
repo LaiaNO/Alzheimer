@@ -22,20 +22,21 @@ var createScene = function (engine) {
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 30}, scene);
     ground.material = new BABYLON.StandardMaterial("groundMat", scene);
     ground.material.diffuseColor = new BABYLON.Color3(1, 1, 1);
-    ground.material.backFaceCulling = false;
 
     //Walls
-    var wall1 = ground.clone("ground");
+    var wall1 = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 20}, scene);
+    wall1.material = new BABYLON.StandardMaterial("groundMat", scene);
     wall1.position.z = -15;
+    wall1.position.y = 5;
     wall1.rotation.x = 90 * Math.PI / 180;
-    wall1.material = ground.material.clone("lowerMat");
-    wall1.material.diffuseColor = new BABYLON.Color3(0, 1, 0);
+    wall1.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);
 
-    var wall2 = ground.clone("wall1");
+    var wall2 = ground.clone("ground");
     wall2.position.z = +15;
+    wall1.position.y = 5;
     wall2.rotation.x = -90 * Math.PI / 180;
     wall2.material = ground.material.clone("lowerMat");
-    wall2.material.diffuseColor = new BABYLON.Color3(0, 0, 1);
+    wall2.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);
 
     var wall3 = ground.clone("wall1");
     wall3.position.x = +15;
@@ -53,7 +54,7 @@ var createScene = function (engine) {
     instructions.material = new BABYLON.StandardMaterial("groundMat", scene);
     instructions.material.backFaceCulling = false;
     instructions.position.x = 0;
-    instructions.position.y = 1.3;
+    instructions.position.y = 1.1;
     instructions.position.z = 3;
     instructions.rotation.x = -90 * Math.PI / 180;
     instructions.material.diffuseTexture = new BABYLON.Texture("/recursos/text863.png", scene);
