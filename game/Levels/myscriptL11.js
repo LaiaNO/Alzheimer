@@ -1,10 +1,10 @@
 var createScene = function (engine) {
     var scene = new BABYLON.Scene(engine);
 
+    // LIGHT
     var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 10, 5), scene);
-    var light2 = new BABYLON.DirectionalLight("Omni2", new BABYLON.Vector3(0, 10, -5), scene);
 
-    //Add the camera, to be shown as a cone and surrounding collision volume
+    //Add the camera
     var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
     camera.minZ = 0.0001;
     camera.attachControl(canvas, true);
@@ -12,11 +12,10 @@ var createScene = function (engine) {
     camera.angularSpeed = 0.05;
     camera.angle = Math.PI/2;
     camera.direction = new BABYLON.Vector3(Math.cos(camera.angle), 0, Math.sin(camera.angle));
-    
     scene.activeCameras.push(camera);
 
 
-    /* Set Up Scenery 
+    /* Set Up Scenery
     _____________________*/
 
     //Ground
@@ -25,6 +24,7 @@ var createScene = function (engine) {
     ground.material.diffuseColor = new BABYLON.Color3(1, 1, 1);
     ground.material.backFaceCulling = false;
 
+    //Walls
     var wall1 = ground.clone("ground");
     wall1.position.z = -15;
     wall1.rotation.x = 90 * Math.PI / 180;
@@ -33,7 +33,7 @@ var createScene = function (engine) {
 
     var wall2 = ground.clone("wall1");
     wall2.position.z = +15;
-    wall2.rotation.x = 90 * Math.PI / 180;
+    wall2.rotation.x = -90 * Math.PI / 180;
     wall2.material = ground.material.clone("lowerMat");
     wall2.material.diffuseColor = new BABYLON.Color3(0, 0, 1);
 
@@ -45,9 +45,19 @@ var createScene = function (engine) {
 
     var wall4 = ground.clone("wall1");
     wall4.position.x = -15;
-    wall4.rotation.z = 90 * Math.PI / 180;
+    wall4.rotation.z = -90 * Math.PI / 180;
     wall4.material = ground.material.clone("lowerMat");
     wall4.material.diffuseColor = new BABYLON.Color3(1, 1, 0);
+
+    var instructions = BABYLON.MeshBuilder.CreateGround("ground", {width: 1.5, height: 2}, scene);
+    instructions.material = new BABYLON.StandardMaterial("groundMat", scene);
+    instructions.material.backFaceCulling = false;
+    instructions.position.x = 0;
+    instructions.position.y = 1.3;
+    instructions.position.z = 3;
+    instructions.rotation.x = -90 * Math.PI / 180;
+    instructions.material.diffuseTexture = new BABYLON.Texture("/recursos/text863.png", scene);
+    
 
     var randomNumber = function (min, max) {
 		if (min == max) {
@@ -59,7 +69,7 @@ var createScene = function (engine) {
 
     var box = new BABYLON.MeshBuilder.CreateBox("crate", {size: 2}, scene);
     box.material = new BABYLON.StandardMaterial("Mat", scene);
-    box.material.diffuseTexture = new BABYLON.Texture("textures/crate.png", scene);
+    box.material.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/bricktile.jpg", scene);
     box.checkCollisions = true;
 
     var boxNb = 6;
@@ -89,8 +99,9 @@ var createScene = function (engine) {
     camera.ellipsoidOffset = new BABYLON.Vector3(0, 1, 0); 
     
     /* New Input Management for Camera
+    https://playground.babylonjs.com/#CTCSWQ#1  
     __________________________________*/
-    
+
     //First remove the default management.
     camera.inputs.removeByType("FreeCameraKeyboardMoveInput");
      
@@ -206,6 +217,11 @@ var createScene = function (engine) {
     
     //Add the new keys input manager to the camera.
      camera.inputs.add(new FreeCameraKeyboardWalkInput());
+
+    
+    /*Click Box - Selection
+    ------------------------ */
+
  
     return scene;
 }
