@@ -34,6 +34,7 @@ const createScene = function(engine) {
     };
     var setCamArcRotate = function() {
         scene.activeCamera = camera2;
+        camera1.setTarget(BABYLON.Vector3);
         camera2.attachControl(canvas, true);
     };
 
