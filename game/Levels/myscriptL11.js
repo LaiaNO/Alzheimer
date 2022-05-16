@@ -2,8 +2,8 @@ var createScene = function (engine) {
     var scene = new BABYLON.Scene(engine);
 
     // LIGHT
-    var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(20, 10, 5), scene);
-    var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, -15, 5), scene);
+    var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 10, 5), scene);
+    var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(30, -15, 5), scene);
     //Add the camera
     var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
     camera.minZ = 0.0001;
@@ -31,14 +31,6 @@ var createScene = function (engine) {
     wall1.rotation.x = 90 * Math.PI / 180;
     wall1.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);
 
-    //esta al reves :(
-    /*var wall2 = ground.clone("ground");
-    wall2.position.z = +15;
-    wall1.position.y = 5;
-    wall2.rotation.x = 90 * Math.PI / 180;
-    wall2.rotation.y = 0 * Math.PI / 180;
-    wall2.material = ground.material.clone("lowerMat");
-    wall2.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);*/
     var wall2 = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 20}, scene);
     wall2.material = new BABYLON.StandardMaterial("groundMat", scene);
     wall2.position.z = 15;
@@ -52,13 +44,13 @@ var createScene = function (engine) {
     wall3.position.x = +15;
     wall3.rotation.z = 90 * Math.PI / 180;
     wall3.material = ground.material.clone("lowerMat");
-    wall3.material.diffuseColor = new BABYLON.Color3(1, 0, 0);
+    wall3.material.diffuseTexture = new BABYLON.Texture("/recursos/supe2.png", scene);
 
     var wall4 = ground.clone("wall1");
     wall4.position.x = -15;
     wall4.rotation.z = -90 * Math.PI / 180;
     wall4.material = ground.material.clone("lowerMat");
-    wall4.material.diffuseColor = new BABYLON.Color3(1, 1, 0);
+    wall4.material.diffuseTexture = new BABYLON.Texture("/recursos/supe2.png", scene);
 
     //instructions
     var instructions = BABYLON.MeshBuilder.CreateGround("ground", {width: 1.5, height: 2}, scene);
