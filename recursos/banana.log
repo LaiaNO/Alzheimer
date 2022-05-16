@@ -1,0 +1,34 @@
+Exporter version: 2.93.5, Blender version: 2.93.1
+========= Conversion from Blender to Babylon.js =========
+	Scene settings used :
+		Inline textures     :  false
+		Material Type       :  PBR
+		Positions Precision :  4
+		Normals Precision   :  3
+		UVs Precision       :  3
+		Vert Color Precision:  3
+		Mat Weight Precision:  2
+		Keep Z-up r-handed  :  no
+		Texture directory   :  /Users/laianavarroolivella/Proyectos/Alzheimer/recursos/
+	Python World class constructor completed
+	WARNING: No active camera has been assigned, or is not in a currently enabled collection
+	processing begun of node:  banana_root
+	processing begun of mesh:  Box03
+		processing begun of material:  Box03Mat
+		processing begun of material:  Material
+		processing begun of material:  Material.001
+		processing begun of material:  Material.002
+		processing begun of multimaterial:  banana.Multimaterial#0
+		Custom split normals with tangents being used
+		num positions      :  2432
+		num normals        :  2432
+		num tangents       :  9728
+		num uvs            :  4864
+		num uvs2           :  0
+		num colors         :  9728
+		num triangles      :  4028
+========= Writing of JSON file started =========
+	writing mesh:  Box03
+========= Writing of JSON file completed =========
+========= end of processing =========
+elapsed time:  0 min, 0.2106 secs

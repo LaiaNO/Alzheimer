@@ -2,8 +2,8 @@ var createScene = function (engine) {
     var scene = new BABYLON.Scene(engine);
 
     // LIGHT
-    var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 10, 5), scene);
-
+    var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(20, 10, 5), scene);
+    var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, -15, 5), scene);
     //Add the camera
     var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
     camera.minZ = 0.0001;
@@ -31,12 +31,22 @@ var createScene = function (engine) {
     wall1.rotation.x = 90 * Math.PI / 180;
     wall1.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);
 
-    var wall2 = ground.clone("ground");
+    //esta al reves :(
+    /*var wall2 = ground.clone("ground");
     wall2.position.z = +15;
     wall1.position.y = 5;
-    wall2.rotation.x = -90 * Math.PI / 180;
+    wall2.rotation.x = 90 * Math.PI / 180;
+    wall2.rotation.y = 0 * Math.PI / 180;
     wall2.material = ground.material.clone("lowerMat");
+    wall2.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);*/
+    var wall2 = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 20}, scene);
+    wall2.material = new BABYLON.StandardMaterial("groundMat", scene);
+    wall2.position.z = 15;
+    wall2.position.y = 5;
+    wall2.rotation.x = 90 * Math.PI / 180;
+    wall2.rotation.z = -180 * Math.PI / 180;
     wall2.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);
+
 
     var wall3 = ground.clone("wall1");
     wall3.position.x = +15;
@@ -50,6 +60,7 @@ var createScene = function (engine) {
     wall4.material = ground.material.clone("lowerMat");
     wall4.material.diffuseColor = new BABYLON.Color3(1, 1, 0);
 
+    //instructions
     var instructions = BABYLON.MeshBuilder.CreateGround("ground", {width: 1.5, height: 2}, scene);
     instructions.material = new BABYLON.StandardMaterial("groundMat", scene);
     instructions.material.backFaceCulling = false;
@@ -58,36 +69,23 @@ var createScene = function (engine) {
     instructions.position.z = 3;
     instructions.rotation.x = -90 * Math.PI / 180;
     instructions.material.diffuseTexture = new BABYLON.Texture("/recursos/text863.png", scene);
-    
 
-    var randomNumber = function (min, max) {
-		if (min == max) {
-			return (min);
-		}
-		var random = Math.random();
-		return ((random * (max - min)) + min);
-	};
+    //objects
+    var banana = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "banana.babylon", scene);
+    var pineapple = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "pineapple.babylon", scene);
+    var orange = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "orange.babylon", scene);
+    var yogurt = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "yogurt.babylon", scene);
 
-    var box = new BABYLON.MeshBuilder.CreateBox("crate", {size: 2}, scene);
-    box.material = new BABYLON.StandardMaterial("Mat", scene);
-    box.material.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/bricktile.jpg", scene);
-    box.checkCollisions = true;
-
-    var boxNb = 6;
-    var theta = 0;
-    var radius = 6;
-    box.position = new BABYLON.Vector3((radius + randomNumber(-0.5 * radius, 0.5 * radius)) * Math.cos(theta + randomNumber(-0.1 * theta, 0.1 * theta)), 1, (radius + randomNumber(-0.5 * radius, 0.5 * radius)) * Math.sin(theta + randomNumber(-0.1 * theta, 0.1 * theta)));
-
-    var boxes = [box];
-    for (var i = 1; i < boxNb; i++) {
-        theta += 2 * Math.PI / boxNb;
-        var newBox = box.clone("box" + i);
-        boxes.push(newBox);
-        newBox.position = new BABYLON.Vector3((radius + randomNumber(-0.5 * radius, 0.5 * radius)) * Math.cos(theta + randomNumber(-0.1 * theta, 0.1 * theta)), 1, (radius + randomNumber(-0.5 * radius, 0.5 * radius)) * Math.sin(theta + randomNumber(-0.1 * theta, 0.1 * theta)));
-    }
     /* End Create Scenery */
 
-    //Collisions Enabled
+    //Collisions Enabled and gravity
+    scene.gravity = new BABYLON.Vector3(0, -0.9, 0);
+    scene.collisionsEnabled = true;
+    camera.checkCollisions = true;
+    camera.applyGravity = true;
+
+    ground.checkCollisions = true;
+
     scene.collisionsEnabled = true;
     camera.checkCollisions = true;
     ground.checkCollisions = true;
@@ -95,6 +93,10 @@ var createScene = function (engine) {
     wall2.checkCollisions = true;
     wall3.checkCollisions = true;
     wall4.checkCollisions = true;
+    banana.checkCollisions = true;
+    pineapple.checkCollisions = true;
+    orange.checkCollisions = true;
+    yogurt.checkCollisions = true;
 
     camera.ellipsoid = new BABYLON.Vector3(0.5, 1, 0.5);
     camera.ellipsoidOffset = new BABYLON.Vector3(0, 1, 0); 
