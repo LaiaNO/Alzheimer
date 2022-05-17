@@ -8,7 +8,7 @@ var createScene = function (engine) {
     var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
     camera.minZ = 0.0001;
     camera.attachControl(canvas, true);
-    camera.speed = 0.02;
+    camera.speed = 0.01;
     camera.angularSpeed = 0.05;
     camera.angle = Math.PI/2;
     camera.direction = new BABYLON.Vector3(Math.cos(camera.angle), 0, Math.sin(camera.angle));
@@ -22,6 +22,7 @@ var createScene = function (engine) {
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 30}, scene);
     ground.material = new BABYLON.StandardMaterial("groundMat", scene);
     ground.material.diffuseColor = new BABYLON.Color3(1, 1, 1);
+    ground.material.diffuseTexture = new BABYLON.Texture("/recursos/floorImg.jpg", scene);
 
     //Walls
     var wall1 = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 20}, scene);
@@ -67,6 +68,19 @@ var createScene = function (engine) {
     var pineapple = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "pineapple.babylon", scene);
     var orange = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "orange.babylon", scene);
     var yogurt = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "yogurt.babylon", scene);
+
+    yogurt.isPickable = true;
+    orange.isPickable = true;
+    var name = 'None';
+    scene.onPointerDown = function (evt, pickResult) {
+            // We try to pick an object
+        if (pickResult.hit) {
+           name = pickResult.pickedMesh.name;
+            //name.textContent = pickResult.pickedMesh.name;
+            console.dir(name);
+
+        }
+    };
 
     /* End Create Scenery */
 
@@ -216,6 +230,11 @@ var createScene = function (engine) {
     
     /*Click Box - Selection
     ------------------------ */
+    scene.onPointerDown = function(evt, pickInfo) {
+        if(pickInfo.hit) {
+            camera.focusOn([pickInfo.pickedMesh], true);
+        }
+    }
 
  
     return scene;
