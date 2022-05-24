@@ -2,7 +2,7 @@ function createBox2(scene) {
     var mat2 = new BABYLON.StandardMaterial("mat2", scene);
     mat2.diffuseColor = BABYLON.Color3.Blue();
     var box = BABYLON.MeshBuilder.CreateBox("box2",  scene);
-    box.translate(new BABYLON.Vector3(3, 0.5, 0), 1, BABYLON.Space.LOCAL);
+    box.translate(new BABYLON.Vector3(-5.5, 0.5, -5), 1, BABYLON.Space.LOCAL);
     box.material = mat2;
     box.actionManager = new BABYLON.ActionManager(scene);
     box.actionManager.registerAction(
@@ -263,41 +263,12 @@ var createScene = function (engine) {
     // add buttons
     var buttonbox = document.createElement('div');
     buttonbox.id = "buttonbox";
-    buttonbox.style.position = "absolute";
-    buttonbox.style.top = "60px";
-    buttonbox.style.left = "85%";
-    buttonbox.style.border = "5pt inset blue";
-    buttonbox.style.padding = "2pt";
-    buttonbox.style.paddingRight = "2pt";
-    buttonbox.style.width = "10em";
-    buttonbox.style.display = "block";
     document.body.appendChild(buttonbox);
-
-    var tTag = document.createElement('div');
-    tTag.id = "choose";
-    tTag.textContent = "Mesh name";
-    tTag.style.textAlign = "center";
-    tTag.style.border = "2pt solid gold";
-    tTag.style.marginLeft = "1.5pt";
-    tTag.style.marginTop = "3pt";
-    tTag.style.marginBottom = "2pt";
-    tTag.style.backgroundColor = "dodgerblue";
-    tTag.style.width = "96%";
-    tTag.style.fontSize = "1.0em";
-    tTag.style.color = "white";
-    buttonbox.appendChild(tTag);
 
 
     var header = document.createElement('div');
-    header.id = "header";
+    header.id = "headerBox";
     header.textContent = "No Picked Mesh";
-    header.style.textAlign = "center";
-    header.style.border = "2pt solid red";
-    header.style.marginLeft = "1.5pt";
-    header.style.backgroundColor = "teal";
-    header.style.width = "96%";
-    header.style.fontSize = "1.0em";
-    header.style.color = "black";
     buttonbox.appendChild(header);
     /*Click Box - Selection
     ------------------------ */
@@ -305,6 +276,7 @@ var createScene = function (engine) {
         // We try to pick an object
         if (pickResult.hit) {
             header.textContent = pickResult.pickedMesh.name;
+            
         }
     };
 
