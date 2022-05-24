@@ -76,8 +76,27 @@ var createScene = function (engine) {
         sambaAnim.start(true, 1.0, sambaAnim.from, sambaAnim.to, false);
     
     });
-    //var old = BABYLON.SceneLoader.ImportMesh("/recursos/oldMan.gbl", scene);
-    //old.position.x = 5;
+
+    // Append glTF model to scene.
+    BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "oldMan.gltf", scene).then(function (result) {
+        result.meshes[0].position.x = 5;
+        result.meshes[0].position.y = 0;
+        result.meshes[0].scaling.scaleInPlace(1.1);
+    })
+    // Append glTF model to scene.
+    BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "looking.gltf", scene).then(function (look) {
+        look.meshes[0].position.x = 4;
+        look.meshes[0].position.z = 2;
+        look.meshes[0].rotation.z = 70 * Math.PI / 180;
+        look.meshes[0].scaling.scaleInPlace(0.9);
+    })
+    // Append glTF model to scene.
+    BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "think.gltf", scene).then(function (think) {
+        think.meshes[0].position.x = -4;
+        think.meshes[0].position.z = 6;
+        think.meshes[0].rotation.z = 70 * Math.PI / 180;
+        think.meshes[0].scaling.scaleInPlace(0.9);
+    })
 
     var name = 'None';
     scene.onPointerDown = function (evt, pickResult) {
