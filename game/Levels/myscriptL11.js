@@ -66,9 +66,14 @@ var createScene = function (engine) {
     //objects
     var banana = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "banana.babylon", scene);
     var pineapple = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "pineapple.babylon", scene);
-    var orange = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "orange.babylon", scene);
-    var yogurt = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "yogurt.babylon", scene);
+    var orange = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "orange.babylon", scene).then(function (orange) {
+        orange[0].isPickable = true;
+    })
+    var yogurt = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "yogurt.babylon", scene).then(function (yogurt) {
+        yogurt[0].isPickable = true;
+    })
 
+    //Touck Yogurt
     yogurt.isPickable = true;
     orange.isPickable = true;
     var name = 'None';
@@ -91,7 +96,6 @@ var createScene = function (engine) {
     camera.applyGravity = true;
 
     ground.checkCollisions = true;
-
     scene.collisionsEnabled = true;
     camera.checkCollisions = true;
     ground.checkCollisions = true;
@@ -229,12 +233,12 @@ var createScene = function (engine) {
 
     
     /*Click Box - Selection
-    ------------------------ */
+    
     scene.onPointerDown = function(evt, pickInfo) {
         if(pickInfo.hit) {
             camera.focusOn([pickInfo.pickedMesh], true);
         }
-    }
+    }------------------------ */
 
  
     return scene;
