@@ -97,6 +97,14 @@ var createScene = function (engine) {
         think.meshes[0].rotation.z = 70 * Math.PI / 180;
         think.meshes[0].scaling.scaleInPlace(0.9);
     })
+    // Append glTF model to scene.
+    BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "waving.gltf", scene).then(function (waving) {
+        waving.meshes[0].position.x = -14;
+        waving.meshes[0].position.z = 6;
+        waving.meshes[0].rotation.z = 70 * Math.PI / 180;
+        waving.meshes[0].scaling.scaleInPlace(0.9);
+    })
+
 
     var name = 'None';
     scene.onPointerDown = function (evt, pickResult) {
