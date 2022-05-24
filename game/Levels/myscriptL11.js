@@ -1,3 +1,23 @@
+function createBox2(scene) {
+    var mat2 = new BABYLON.StandardMaterial("mat2", scene);
+    mat2.diffuseColor = BABYLON.Color3.Blue();
+    var box = BABYLON.MeshBuilder.CreateBox("box2",  scene);
+    box.translate(new BABYLON.Vector3(3, 0.5, 0), 1, BABYLON.Space.LOCAL);
+    box.material = mat2;
+    box.actionManager = new BABYLON.ActionManager(scene);
+    box.actionManager.registerAction(
+	new BABYLON.IncrementValueAction(
+	    BABYLON.ActionManager.OnPickDownTrigger, box, "rotation.y", 0.0)
+    );
+    let box1 = scene.getMeshByName("box1");
+    if (box1) {
+	box.actionManager.registerAction(
+	    new BABYLON.IncrementValueAction(BABYLON.ActionManager.OnPickDownTrigger, box1, "position.x", 0.0)
+	);
+    }
+    return box; 
+}
+
 var createScene = function (engine) {
     var scene = new BABYLON.Scene(engine);
 
@@ -23,6 +43,14 @@ var createScene = function (engine) {
     ground.material = new BABYLON.StandardMaterial("groundMat", scene);
     ground.material.diffuseColor = new BABYLON.Color3(1, 1, 1);
     ground.material.diffuseTexture = new BABYLON.Texture("/recursos/floorImg.jpg", scene);
+
+    // Path
+    var path = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "path.babylon", scene).then(function (path) {
+        path.position.y = 50;
+    })
+
+    // Box
+    var box2 = createBox2(scene);
 
     //Walls
     var wall1 = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 20}, scene);
@@ -232,13 +260,54 @@ var createScene = function (engine) {
      camera.inputs.add(new FreeCameraKeyboardWalkInput());
 
     
+    // add buttons
+    var buttonbox = document.createElement('div');
+    buttonbox.id = "buttonbox";
+    buttonbox.style.position = "absolute";
+    buttonbox.style.top = "60px";
+    buttonbox.style.left = "85%";
+    buttonbox.style.border = "5pt inset blue";
+    buttonbox.style.padding = "2pt";
+    buttonbox.style.paddingRight = "2pt";
+    buttonbox.style.width = "10em";
+    buttonbox.style.display = "block";
+    document.body.appendChild(buttonbox);
+
+    var tTag = document.createElement('div');
+    tTag.id = "choose";
+    tTag.textContent = "Mesh name";
+    tTag.style.textAlign = "center";
+    tTag.style.border = "2pt solid gold";
+    tTag.style.marginLeft = "1.5pt";
+    tTag.style.marginTop = "3pt";
+    tTag.style.marginBottom = "2pt";
+    tTag.style.backgroundColor = "dodgerblue";
+    tTag.style.width = "96%";
+    tTag.style.fontSize = "1.0em";
+    tTag.style.color = "white";
+    buttonbox.appendChild(tTag);
+
+
+    var header = document.createElement('div');
+    header.id = "header";
+    header.textContent = "No Picked Mesh";
+    header.style.textAlign = "center";
+    header.style.border = "2pt solid red";
+    header.style.marginLeft = "1.5pt";
+    header.style.backgroundColor = "teal";
+    header.style.width = "96%";
+    header.style.fontSize = "1.0em";
+    header.style.color = "black";
+    buttonbox.appendChild(header);
     /*Click Box - Selection
-    
-    scene.onPointerDown = function(evt, pickInfo) {
-        if(pickInfo.hit) {
-            camera.focusOn([pickInfo.pickedMesh], true);
+    ------------------------ */
+    scene.onPointerDown = function (evt, pickResult) {
+        // We try to pick an object
+        if (pickResult.hit) {
+            header.textContent = pickResult.pickedMesh.name;
         }
-    }------------------------ */
+    };
+
 
  
     return scene;
