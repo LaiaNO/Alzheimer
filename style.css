@@ -5,6 +5,24 @@
     touch-action: none;
 }
 
+#buttonbox{
+  position:"absolute";
+  top: "100px";
+  left: "50%";
+  padding: "2pt";
+  padding-right: "2pt";
+  width: "10em";
+  display: "block";
+}
+#headerBox{
+  text-align: center;
+  margin-left: "1.5pt";
+  background-color: #00cef5;
+  color:white;
+  width: "96%";
+  font-size: "1.0em";
+}
+
 #renderCanvasL1 {
   width: 100%;
   height: 100%;

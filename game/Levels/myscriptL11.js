@@ -2,7 +2,7 @@ function createBox2(scene) {
     var mat2 = new BABYLON.StandardMaterial("mat2", scene);
     mat2.diffuseColor = BABYLON.Color3.Blue();
     var box = BABYLON.MeshBuilder.CreateBox("box2",  scene);
-    box.translate(new BABYLON.Vector3(-5.5, 0.5, -5), 1, BABYLON.Space.LOCAL);
+    box.translate(new BABYLON.Vector3(-5.4, 0.5, -5), 1, BABYLON.Space.LOCAL);
     box.material = mat2;
     box.actionManager = new BABYLON.ActionManager(scene);
     box.actionManager.registerAction(
@@ -17,7 +17,44 @@ function createBox2(scene) {
     }
     return box; 
 }
-
+function createPath(scene) {
+    var mat2 = new BABYLON.StandardMaterial("mat2", scene);
+    mat2.diffuseColor = BABYLON.Color3.Yellow();
+    var box = BABYLON.MeshBuilder.CreateGround("ground", {width: 5, height: 1.5}, scene);
+    box.translate(new BABYLON.Vector3(-2, 0.01, 0), 1, BABYLON.Space.LOCAL);
+    box.material = mat2;
+    box.actionManager = new BABYLON.ActionManager(scene);
+    box.actionManager.registerAction(
+	new BABYLON.IncrementValueAction(
+	    BABYLON.ActionManager.OnPickDownTrigger, box, "rotation.y", 0.0)
+    );
+    let path = scene.getMeshByName("path");
+    if (path) {
+	box.actionManager.registerAction(
+	    new BABYLON.IncrementValueAction(BABYLON.ActionManager.OnPickDownTrigger, path, "position.x", 0.0)
+	);
+    }
+    return box; 
+}
+function createPath2(scene) {
+    var mat2 = new BABYLON.StandardMaterial("mat2", scene);
+    mat2.diffuseColor = BABYLON.Color3.Yellow();
+    var box = BABYLON.MeshBuilder.CreateGround("ground", {width: 1.5, height: 5}, scene);
+    box.translate(new BABYLON.Vector3(-5, 0.01, -1.75), 1, BABYLON.Space.LOCAL);
+    box.material = mat2;
+    box.actionManager = new BABYLON.ActionManager(scene);
+    box.actionManager.registerAction(
+	new BABYLON.IncrementValueAction(
+	    BABYLON.ActionManager.OnPickDownTrigger, box, "rotation.y", 0.0)
+    );
+    let path = scene.getMeshByName("path");
+    if (path) {
+	box.actionManager.registerAction(
+	    new BABYLON.IncrementValueAction(BABYLON.ActionManager.OnPickDownTrigger, path, "position.x", 0.0)
+	);
+    }
+    return box; 
+}
 var createScene = function (engine) {
     var scene = new BABYLON.Scene(engine);
 
@@ -45,9 +82,8 @@ var createScene = function (engine) {
     ground.material.diffuseTexture = new BABYLON.Texture("/recursos/floorImg.jpg", scene);
 
     // Path
-    var path = BABYLON.SceneLoader.ImportMeshAsync("", "/recursos/", "path.babylon", scene).then(function (path) {
-        path.position.y = 50;
-    })
+    var path = createPath(scene);
+    var path2 = createPath2(scene);
 
     // Box
     var box2 = createBox2(scene);
@@ -122,6 +158,9 @@ var createScene = function (engine) {
     scene.collisionsEnabled = true;
     camera.checkCollisions = true;
     camera.applyGravity = true;
+
+    path.collisionsEnabled = true;
+    path.checkCollisions = true;
 
     ground.checkCollisions = true;
     scene.collisionsEnabled = true;
@@ -276,7 +315,7 @@ var createScene = function (engine) {
         // We try to pick an object
         if (pickResult.hit) {
             header.textContent = pickResult.pickedMesh.name;
-            
+
         }
     };
 
