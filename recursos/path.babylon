@@ -1,0 +1,13 @@
+{"producer":{"name":"Blender","version":"2.93.1","exporter_version":"2.93.5","file":"path.babylon"},
+"autoClear":true,"clearColor":[0.0509,0.0509,0.0509],"gravity":[0,-9.81,0],
+"meshes":[{"name":"Plane.001","id":"Plane.001","billboardMode":0,"position":[-6.6021,0.0261,6.8256],"rotation":[0,3.1404,0],"scaling":[4.3643,1,1],"isVisible":true,"isEnabled":true,"pickable":false
+,"positions":[1,0,-1,-1,0,1,-1,0,-1,-0.5106,-0.0261,7.8283,-2.5111,-0.0261,5.8388,-0.5111,-0.0261,5.8283,-1.0244,0,-0.9997,-0.5575,0,7.7203,-1.0158,0,7.7289,1,0,1,-2.5106,-0.0261,7.8388,-0.5662,0,-1.0083]
+,"normals":[0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0,0,1,0]
+,"uvs":[1,0,0,1,0,0,0,0,1,1,0,1,1,0,0,1,0,0,1,1,1,0,1,1]
+,"indices":[0,1,2,3,4,5,6,7,8,0,9,1,3,10,4,6,11,7]
+,"subMeshes":[{"materialIndex":0,"verticesStart":0,"verticesCount":12,"indexStart":0,"indexCount":18}]
+,"instances":[]}
+],
+"cameras":[{"name":"Camera","id":"Camera","position":[7.3589,4.9583,-6.9258],"rotation":[0.4615,-0.8149,0],"fov":0.6911,"minZ":0.1,"maxZ":100,"ellipsoid":[0.2,0.9,0.2],"type":"UniversalCamera"}],"activeCameraID":"Camera",
+"lights":[{"name":"Light","id":"Light","type":0,"position":[4.0762,5.9039,1.0055],"range":40,"intensityMode":0,"intensity":1,"diffuse":[1,1,1],"specular":[1,1,1],"radius":0.1}]
+}
