@@ -6,20 +6,23 @@
 }
 
 #buttonbox{
-  position:"absolute";
-  top: "100px";
-  left: "50%";
-  padding: "2pt";
-  padding-right: "2pt";
-  width: "10em";
-  display: "block";
+  top: 100px;
+  padding: 2pt;
+  display: block;
 }
+#choose{
+  text-align: center;
+  margin-top: 3pt;
+  margin-bottom: 2pt;
+  background-color: dodgerblue;
+  font-size:1.0em;
+  color: white;
+}
+
 #headerBox{
   text-align: center;
-  margin-left: "1.5pt";
   background-color: #00cef5;
   color:white;
-  width: "96%";
   font-size: "1.0em";
 }
 

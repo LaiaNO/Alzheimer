@@ -74,6 +74,9 @@ var createScene = function (engine) {
 
     /* Set Up Scenery
     _____________________*/
+    var score=0;
+    //When click event is raised
+    
 
     //Ground
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 30}, scene);
@@ -141,15 +144,7 @@ var createScene = function (engine) {
     yogurt.isPickable = true;
     orange.isPickable = true;
     var name = 'None';
-    scene.onPointerDown = function (evt, pickResult) {
-            // We try to pick an object
-        if (pickResult.hit) {
-           name = pickResult.pickedMesh.name;
-            //name.textContent = pickResult.pickedMesh.name;
-            console.dir(name);
-
-        }
-    };
+    
 
     /* End Create Scenery */
 
@@ -161,6 +156,8 @@ var createScene = function (engine) {
 
     path.collisionsEnabled = true;
     path.checkCollisions = true;
+    path2.collisionsEnabled = true;
+    path2.checkCollisions = true;
 
     ground.checkCollisions = true;
     scene.collisionsEnabled = true;
@@ -299,11 +296,16 @@ var createScene = function (engine) {
      camera.inputs.add(new FreeCameraKeyboardWalkInput());
 
     
-    // add buttons
+    //Add buttons
     var buttonbox = document.createElement('div');
     buttonbox.id = "buttonbox";
     document.body.appendChild(buttonbox);
 
+    var tTag = document.createElement('div');
+    tTag.id = "choose";
+    tTag.textContent = "score";
+    buttonbox.appendChild(tTag);
+	//tTag.textContent = score;
 
     var header = document.createElement('div');
     header.id = "headerBox";
@@ -312,15 +314,17 @@ var createScene = function (engine) {
     /*Click Box - Selection
     ------------------------ */
     scene.onPointerDown = function (evt, pickResult) {
-        // We try to pick an object
+        //We try to pick an object
         if (pickResult.hit) {
             header.textContent = pickResult.pickedMesh.name;
+            name = pickResult.pickedMesh.name;
+            //name.textContent = pickResult.pickedMesh.name;
+            console.dir(name);
+        	if (pickResult.pickedMesh.name == "box2"){
+        	    tTag.textContent = score+1;
+						}
+    };}
 
-        }
-    };
-
-
- 
     return scene;
 }
 
