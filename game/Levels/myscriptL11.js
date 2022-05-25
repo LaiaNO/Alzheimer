@@ -140,12 +140,7 @@ var createScene = function (engine) {
         yogurt[0].isPickable = true;
     })
 
-    //Touck Yogurt
-    yogurt.isPickable = true;
-    orange.isPickable = true;
     var name = 'None';
-    
-
     /* End Create Scenery */
 
     //Collisions Enabled and gravity
