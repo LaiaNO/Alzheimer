@@ -94,6 +94,7 @@ var createScene = function (engine) {
     var path2 = createPath2(scene);
 
     /* Create planes to detect path position
+    https://playground.babylonjs.com/#KQV9SA 
     ------------------------------------------*/
     var matPlan = new BABYLON.StandardMaterial("matPlan1", scene);
     matPlan.backFaceCulling = false;
