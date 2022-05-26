@@ -63,7 +63,7 @@ var createScene = function (engine) {
     var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(30, -15, 5), scene);
     //Add the camera
     var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
-    camera.minZ = 0.0001;
+    camera.minZ = 0.001;
     camera.attachControl(canvas, true);
     camera.speed = 0.01;
     camera.angularSpeed = 0.05;
@@ -71,6 +71,10 @@ var createScene = function (engine) {
     camera.direction = new BABYLON.Vector3(Math.cos(camera.angle), 0, Math.sin(camera.angle));
     scene.activeCameras.push(camera);
 
+    // Mesh to colide camera detection points
+    var cone = BABYLON.MeshBuilder.CreateCylinder("dummyCamera", {diameterTop:0.01, diameterBottom:0.2, height:0.2}, scene);
+    cone.parent = camera;
+    cone.position.x = -0.02;
 
     /* Set Up Scenery
     _____________________*/
@@ -87,6 +91,46 @@ var createScene = function (engine) {
     // Path
     var path = createPath(scene);
     var path2 = createPath2(scene);
+
+    /* Create planes to detect path position
+    ------------------------------------------*/
+    var matPlan = new BABYLON.StandardMaterial("matPlan1", scene);
+    matPlan.backFaceCulling = false;
+    matPlan.emissiveColor = new BABYLON.Color3(0.2, 1, 0.2);
+    var matBB = new BABYLON.StandardMaterial("matBB", scene);
+    matBB.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    matBB.wireframe = true;
+    
+    var plan1 = BABYLON.Mesh.CreatePlane("plane1", 20, scene);
+    plan1.position = new BABYLON.Vector3(13, 1, 0);
+    plan1.rotation.x = -90*Math.PI / 4;
+    plan1.material = matPlan;
+    // AABB - Axis aligned bounding box
+    var planAABB = BABYLON.Mesh.CreateBox("AABB", 20, scene);
+    planAABB.material = matBB;
+    planAABB.position = new BABYLON.Vector3(13, 1, 0);
+    planAABB.scaling = new BABYLON.Vector3(1, 1, 0.05);
+    planAABB.rotation.x = -90*Math.PI / 4;
+    // Balloons - BORRAR BALLON
+    var balloon1 = BABYLON.Mesh.CreateSphere("balloon1", 20, 0.3, scene);
+    balloon1.material = new BABYLON.StandardMaterial("matBallon", scene);
+    //balloon1.parent = camera;
+    balloon1.position.x = 0.8;
+    balloon1.position.z = 1.2;
+    balloon1.position.y = 1.3;
+    //balloon1.position = new BABYLON.Vector3(6, 5, 0);
+
+
+    //Animation
+    scene.registerBeforeRender(function () {
+
+        //Balloon 1 intersection -- Precise = false
+        if (cone.intersectsMesh(plan1, false)) {
+            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);
+        } else {
+            balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        }
+    });
 
     // Box
     var box2 = createBox2(scene);
@@ -312,13 +356,23 @@ var createScene = function (engine) {
         //We try to pick an object
         if (pickResult.hit) {
             header.textContent = pickResult.pickedMesh.name;
-            name = pickResult.pickedMesh.name;
-            //name.textContent = pickResult.pickedMesh.name;
-            console.dir(name);
+            names = pickResult.pickedMesh.name;
+            console.dir(names);
         	if (pickResult.pickedMesh.name == "box2"){
         	    tTag.textContent = score+1;
 						}
     };}
+
+    var touch = path2.collisionsEnabled.State 
+    /*
+    scene.registerBeforeRender(function () {
+        //lloon 1 intersection -- Precise = false
+        if (cone.intersectsMesh(plan2, false)) {
+            balloon1.material.emissiveColor = new BABYLON.Color3(1, 0, 0);
+        } else {
+            balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+        }
+    });*/
 
     return scene;
 }
