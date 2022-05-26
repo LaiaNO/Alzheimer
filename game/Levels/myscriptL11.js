@@ -60,7 +60,7 @@ var createScene = function (engine) {
 
     // LIGHT
     var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 10, 5), scene);
-    var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(30, -15, 5), scene);
+    //var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(30, -15, 5), scene);
     //Add the camera
     var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
     camera.minZ = 0.001;
@@ -74,7 +74,8 @@ var createScene = function (engine) {
     // Mesh to colide camera detection points
     var cone = BABYLON.MeshBuilder.CreateCylinder("dummyCamera", {diameterTop:0.01, diameterBottom:0.2, height:0.2}, scene);
     cone.parent = camera;
-    cone.position.x = -0.02;
+    cone.position.x = -0.2;
+    cone.position.z = -0.2;
 
     /* Set Up Scenery
     _____________________*/
