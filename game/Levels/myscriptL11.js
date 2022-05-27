@@ -156,51 +156,54 @@ var createScene = function (engine) {
     matBB.emissiveColor = new BABYLON.Color3(1, 1, 1);
     matBB.wireframe = true;
     
-    var plan1 = BABYLON.MeshBuilder.CreatePlane("plane1",{height:2, width: 7}, scene);
-    plan1.position = new BABYLON.Vector3(-3, 1, 0);
+    var plan1 = BABYLON.MeshBuilder.CreatePlane("plane1",{height:2, width: 5}, scene);
+    plan1.position = new BABYLON.Vector3(-1.5, 1, 0);
     plan1.rotation.x = -90*Math.PI / 4;
     plan1.material = matPlan;
-    var plan2 = BABYLON.MeshBuilder.CreatePlane("plane1",{height:5, width: 2}, scene);
-    plan2.position = new BABYLON.Vector3(-5, 1, -1.5);
+    var plan2 = BABYLON.MeshBuilder.CreatePlane("plane2",{height:2, width: 2}, scene);
+    plan2.position = new BABYLON.Vector3(-5.5, 1, 0);
     plan2.rotation.x = -90*Math.PI / 4;
     plan2.material = matPlan;
+    var plan3 = BABYLON.MeshBuilder.CreatePlane("plane3",{height:2, width: 2}, scene);
+    plan3.position = new BABYLON.Vector3(-5.5, 1, -2.5);
+    plan3.rotation.x = -90*Math.PI / 4;
+    plan3.material = matPlan;
     // AABB - Axis aligned bounding box
-    var planAABB = BABYLON.MeshBuilder.CreateBox("AABB", {height:2, width: 7}, scene);
+    var planAABB = BABYLON.MeshBuilder.CreateBox("AABB", {height:2, width: 5}, scene);
     planAABB.material = matBB;
-    planAABB.position = new BABYLON.Vector3(-3, 1, 0);
+    planAABB.position = new BABYLON.Vector3(-1.5, 1, 0);
     planAABB.scaling = new BABYLON.Vector3(1, 1, 5);
     planAABB.rotation.x = -90*Math.PI / 4;
-    var planAABB2 = BABYLON.MeshBuilder.CreateBox("AABB", {height:2, width: 7}, scene);
+    planAABB.isPickable = false;
+    var planAABB2 = BABYLON.MeshBuilder.CreateBox("AABB1", {height:2, width: 2}, scene);
     planAABB2.material = matBB;
-    planAABB2.position = new BABYLON.Vector3(-5, 1, -1.5);
+    planAABB2.position = new BABYLON.Vector3(-5.5, 1, 0);
     planAABB2.scaling = new BABYLON.Vector3(1, 1, 5);
-    planAABB2.rotation.z = -90*Math.PI / 4;
+    planAABB2.rotation.x = 90*Math.PI / 4;
+    planAABB2.isPickable = false;
+    var planAABB3 = BABYLON.MeshBuilder.CreateBox("AABB2", {height:2, width: 2}, scene);
+    planAABB3.material = matBB;
+    planAABB3.position = new BABYLON.Vector3(-5.5, 1, -2.5);
+    planAABB3.scaling = new BABYLON.Vector3(1, 1, 5);
+    planAABB3.rotation.x = 90*Math.PI / 4;
+    planAABB3.isPickable = false;
     // Balloons - BORRAR BALLON
     var balloon1 = BABYLON.Mesh.CreateSphere("balloon1", 20, 0.3, scene);
     balloon1.material = new BABYLON.StandardMaterial("matBallon", scene);
     balloon1.position.x = 0.8;
     balloon1.position.z = 1.2;
     balloon1.position.y = 1.3;
-    var balloon2 = BABYLON.Mesh.CreateSphere("balloon1", 20, 0.3, scene);
-    balloon2.material = new BABYLON.StandardMaterial("matBallon", scene);
-    balloon2.position.x = 0;
-    balloon2.position.z = 1.2;
-    balloon2.position.y = 1.3;
+
     //Animation
     scene.registerBeforeRender(function () {
-
         //Balloon 1 intersection -- Precise = false
         if (cone.intersectsMesh(plan1, false)) {
-            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);
-        } else {
-            balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
-        }
-        //Balloon 1 intersection -- Precise = false
-        if (cone.intersectsMesh(plan2, false)) {
-            balloon2.material.emissiveColor = new BABYLON.Color3(0, 1, 0);
-        } else {
-            balloon2.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
-        }
+            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
+        else if (cone.intersectsMesh(plan2, false)) {
+            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
+        else if (cone.intersectsMesh(plan3, false)) {
+            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
+        else {balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);}      
     });
 
     var name = 'None';
