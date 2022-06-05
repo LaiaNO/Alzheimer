@@ -62,20 +62,31 @@ var createScene = function (engine) {
     var light = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(0, 10, 5), scene);
     //var light2 = new BABYLON.HemisphericLight("HemiLight", new BABYLON.Vector3(30, -15, 5), scene);
     //Add the camera
-    var camera = new BABYLON.UniversalCamera("MyCamera", new BABYLON.Vector3(0, 1, 0), scene);
+    var camera = new BABYLON.UniversalCamera("viewCamera", new BABYLON.Vector3(4, 1, 0), scene);
     camera.minZ = 0.001;
     camera.attachControl(canvas, true);
     camera.speed = 0.01;
+    camera.rotation.y = -70 * Math.PI / 180;
     camera.angularSpeed = 0.05;
     camera.angle = Math.PI/2;
     camera.direction = new BABYLON.Vector3(Math.cos(camera.angle), 0, Math.sin(camera.angle));
     scene.activeCameras.push(camera);
-
+    //camera.parent = light;
     // Mesh to colide camera detection points
     var cone = BABYLON.MeshBuilder.CreateCylinder("dummyCamera", {diameterTop:0.01, diameterBottom:0.2, height:0.2}, scene);
     cone.parent = camera;
     cone.position.x = -0.2;
     cone.position.z = -0.2;
+
+    // Sound
+    var introaudio = new BABYLON.Sound("", "/recursos/instructionsAudio.mp4", scene, null, {
+        autoplay: true
+      });
+    var path1sound = new BABYLON.Sound("", "/recursos/path1.mp4", scene, null, {
+        autoplay: false
+      });
+    path1soundState = false;
+
 
     /* Set Up Scenery
     _____________________*/
@@ -99,19 +110,16 @@ var createScene = function (engine) {
     //Walls
     var wall1 = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 20}, scene);
     wall1.material = new BABYLON.StandardMaterial("groundMat", scene);
-    wall1.position.z = -15;
-    wall1.position.y = 5;
+    wall1.position = new BABYLON.Vector3(0, 5,-15);
     wall1.rotation.x = 90 * Math.PI / 180;
     wall1.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);
 
     var wall2 = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 20}, scene);
     wall2.material = new BABYLON.StandardMaterial("groundMat", scene);
-    wall2.position.z = 15;
-    wall2.position.y = 5;
+    wall2.position = new BABYLON.Vector3(0, 5,15);
     wall2.rotation.x = 90 * Math.PI / 180;
     wall2.rotation.z = -180 * Math.PI / 180;
     wall2.material.diffuseTexture = new BABYLON.Texture("/recursos/super.png", scene);
-
 
     var wall3 = ground.clone("wall1");
     wall3.position.x = +15;
@@ -129,9 +137,7 @@ var createScene = function (engine) {
     var instructions = BABYLON.MeshBuilder.CreateGround("ground", {width: 1.5, height: 2}, scene);
     instructions.material = new BABYLON.StandardMaterial("groundMat", scene);
     instructions.material.backFaceCulling = false;
-    instructions.position.x = 0;
-    instructions.position.y = 1.1;
-    instructions.position.z = 3;
+    instructions.position = new BABYLON.Vector3(0, 1.1, 3);
     instructions.rotation.x = -90 * Math.PI / 180;
     instructions.material.diffuseTexture = new BABYLON.Texture("/recursos/text863.png", scene);
 
@@ -169,7 +175,7 @@ var createScene = function (engine) {
     plan3.rotation.x = -90*Math.PI / 4;
     plan3.material = matPlan;
     // AABB - Axis aligned bounding box
-    var planAABB = BABYLON.MeshBuilder.CreateBox("AABB", {height:2, width: 5}, scene);
+    /*var planAABB = BABYLON.MeshBuilder.CreateBox("AABB", {height:2, width: 5}, scene);
     planAABB.material = matBB;
     planAABB.position = new BABYLON.Vector3(-1.5, 1, 0);
     planAABB.scaling = new BABYLON.Vector3(1, 1, 5);
@@ -186,19 +192,28 @@ var createScene = function (engine) {
     planAABB3.position = new BABYLON.Vector3(-5.5, 1, -2.5);
     planAABB3.scaling = new BABYLON.Vector3(1, 1, 5);
     planAABB3.rotation.x = 90*Math.PI / 4;
-    planAABB3.isPickable = false;
+    planAABB3.isPickable = false;*/
     // Balloons - BORRAR BALLON
     var balloon1 = BABYLON.Mesh.CreateSphere("balloon1", 20, 0.3, scene);
     balloon1.material = new BABYLON.StandardMaterial("matBallon", scene);
-    balloon1.position.x = 0.8;
-    balloon1.position.z = 1.2;
-    balloon1.position.y = 1.3;
+    balloon1.position = new BABYLON.Vector3(0.8, 1.2, 1.3);
+    balloon1.getAbsolutePosition()
+    //balloon1.parent = camera;
 
     //Animation
     scene.registerBeforeRender(function () {
+        console.log(path1sound.onEndedObservable)
+        
         //Balloon 1 intersection -- Precise = false
         if (cone.intersectsMesh(plan1, false)) {
-            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
+            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);
+            
+            if (!path1sound.isPlaying && !path1soundState){
+                path1sound.play();
+                path1soundState = true
+            }
+                     
+        } 
         else if (cone.intersectsMesh(plan2, false)) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
         else if (cone.intersectsMesh(plan3, false)) {
