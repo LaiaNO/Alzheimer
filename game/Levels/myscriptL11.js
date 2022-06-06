@@ -39,8 +39,8 @@ function createPath(scene) {
 function createPath2(scene) {
     var mat2 = new BABYLON.StandardMaterial("mat2", scene);
     mat2.diffuseColor = BABYLON.Color3.Yellow();
-    var box = BABYLON.MeshBuilder.CreateGround("ground", {width: 1.5, height: 5}, scene);
-    box.translate(new BABYLON.Vector3(-5, 0.01, -1.75), 1, BABYLON.Space.LOCAL);
+    var box = BABYLON.MeshBuilder.CreateGround("ground", {width: 1.5, height: 6}, scene);
+    box.translate(new BABYLON.Vector3(-5, 0.01, -2.254), 1, BABYLON.Space.LOCAL);
     box.material = mat2;
     box.actionManager = new BABYLON.ActionManager(scene);
     box.actionManager.registerAction(
@@ -87,12 +87,10 @@ var createScene = function (engine) {
       });
     path1soundState = false;
 
-
     /* Set Up Scenery
     _____________________*/
-    var score=0;
-    //When click event is raised
     
+    var score=0;  
 
     //Ground
     var ground = BABYLON.MeshBuilder.CreateGround("ground", {width: 30, height: 30}, scene);
@@ -158,6 +156,7 @@ var createScene = function (engine) {
     matPlan.backFaceCulling = false;
     matPlan.emissiveColor = new BABYLON.Color3(0.2, 1, 0.2);
     matPlan.alpha = 0;
+
     var matBB = new BABYLON.StandardMaterial("matBB", scene);
     matBB.emissiveColor = new BABYLON.Color3(1, 1, 1);
     matBB.wireframe = true;
@@ -166,33 +165,17 @@ var createScene = function (engine) {
     plan1.position = new BABYLON.Vector3(-1.5, 1, 0);
     plan1.rotation.x = -90*Math.PI / 4;
     plan1.material = matPlan;
+
     var plan2 = BABYLON.MeshBuilder.CreatePlane("plane2",{height:2, width: 2}, scene);
     plan2.position = new BABYLON.Vector3(-5.5, 1, 0);
     plan2.rotation.x = -90*Math.PI / 4;
     plan2.material = matPlan;
+
     var plan3 = BABYLON.MeshBuilder.CreatePlane("plane3",{height:2, width: 2}, scene);
     plan3.position = new BABYLON.Vector3(-5.5, 1, -2.5);
     plan3.rotation.x = -90*Math.PI / 4;
     plan3.material = matPlan;
-    // AABB - Axis aligned bounding box
-    /*var planAABB = BABYLON.MeshBuilder.CreateBox("AABB", {height:2, width: 5}, scene);
-    planAABB.material = matBB;
-    planAABB.position = new BABYLON.Vector3(-1.5, 1, 0);
-    planAABB.scaling = new BABYLON.Vector3(1, 1, 5);
-    planAABB.rotation.x = -90*Math.PI / 4;
-    planAABB.isPickable = false;
-    var planAABB2 = BABYLON.MeshBuilder.CreateBox("AABB1", {height:2, width: 2}, scene);
-    planAABB2.material = matBB;
-    planAABB2.position = new BABYLON.Vector3(-5.5, 1, 0);
-    planAABB2.scaling = new BABYLON.Vector3(1, 1, 5);
-    planAABB2.rotation.x = 90*Math.PI / 4;
-    planAABB2.isPickable = false;
-    var planAABB3 = BABYLON.MeshBuilder.CreateBox("AABB2", {height:2, width: 2}, scene);
-    planAABB3.material = matBB;
-    planAABB3.position = new BABYLON.Vector3(-5.5, 1, -2.5);
-    planAABB3.scaling = new BABYLON.Vector3(1, 1, 5);
-    planAABB3.rotation.x = 90*Math.PI / 4;
-    planAABB3.isPickable = false;*/
+
     // Balloons - BORRAR BALLON
     var balloon1 = BABYLON.Mesh.CreateSphere("balloon1", 20, 0.3, scene);
     balloon1.material = new BABYLON.StandardMaterial("matBallon", scene);
@@ -206,13 +189,10 @@ var createScene = function (engine) {
         
         //Balloon 1 intersection -- Precise = false
         if (cone.intersectsMesh(plan1, false)) {
-            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);
-            
+            balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);          
             if (!path1sound.isPlaying && !path1soundState){
                 path1sound.play();
-                path1soundState = true
-            }
-                     
+                path1soundState = true}        
         } 
         else if (cone.intersectsMesh(plan2, false)) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
@@ -234,7 +214,6 @@ var createScene = function (engine) {
     path.checkCollisions = true;
     path2.collisionsEnabled = true;
     path2.checkCollisions = true;
-
     ground.checkCollisions = true;
     scene.collisionsEnabled = true;
     camera.checkCollisions = true;
