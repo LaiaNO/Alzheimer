@@ -85,7 +85,14 @@ var createScene = function (engine) {
     var path1sound = new BABYLON.Sound("", "/recursos/path1.mp4", scene, null, {
         autoplay: false
       });
+    var nothispath = new BABYLON.Sound("", "/recursos/nothispath.mp4", scene, null, {
+        autoplay: false
+      });
+    var notthis = new BABYLON.Sound("", "/recursos/notthis.mp4", scene, null, {
+        autoplay: false
+      });
     path1soundState = false;
+    nothispathState = false;
 
     /* Set Up Scenery
     _____________________*/
@@ -184,13 +191,12 @@ var createScene = function (engine) {
     //balloon1.parent = camera;
 
     //Animation
-    scene.registerBeforeRender(function () {
-        console.log(path1sound.onEndedObservable)
-        
+    scene.registerBeforeRender(function () {    
+        console.log(introaudio.isPlaying)    
         //Balloon 1 intersection -- Precise = false
         if (cone.intersectsMesh(plan1, false)) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);          
-            if (!path1sound.isPlaying && !path1soundState){
+            if (!introaudio.isPlaying && !path1sound.isPlaying && !path1soundState){
                 path1sound.play();
                 path1soundState = true}        
         } 
@@ -198,7 +204,11 @@ var createScene = function (engine) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
         else if (cone.intersectsMesh(plan3, false)) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);} 
-        else {balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);}      
+        else {
+            balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
+            if (!introaudio.isPlaying && !path1sound.isPlaying && path1soundState && !nothispathState){
+                nothispath.play();
+                nothispathState = true}}      
     });
 
     var name = 'None';
@@ -217,7 +227,6 @@ var createScene = function (engine) {
     ground.checkCollisions = true;
     scene.collisionsEnabled = true;
     camera.checkCollisions = true;
-    ground.checkCollisions = true;
     wall1.checkCollisions = true;
     wall2.checkCollisions = true;
     wall3.checkCollisions = true;
