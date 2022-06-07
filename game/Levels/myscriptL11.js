@@ -1,7 +1,7 @@
 function createBox2(scene) {
     var mat2 = new BABYLON.StandardMaterial("mat2", scene);
     mat2.diffuseColor = BABYLON.Color3.Blue();
-    var box = BABYLON.MeshBuilder.CreateBox("box2",  scene);
+    var box = BABYLON.MeshBuilder.CreateBox("yogurt",  scene);
     box.translate(new BABYLON.Vector3(-5.4, 0.5, -5), 1, BABYLON.Space.LOCAL);
     box.material = mat2;
     box.actionManager = new BABYLON.ActionManager(scene);
@@ -192,7 +192,6 @@ var createScene = function (engine) {
 
     //Animation
     scene.registerBeforeRender(function () {    
-        console.log(introaudio.isPlaying)    
         //Balloon 1 intersection -- Precise = false
         if (cone.intersectsMesh(plan1, false)) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);          
@@ -383,7 +382,7 @@ var createScene = function (engine) {
             header.textContent = pickResult.pickedMesh.name;
             names = pickResult.pickedMesh.name;
             console.dir(names);
-        	if (pickResult.pickedMesh.name == "box2"){
+        	if (pickResult.pickedMesh.name == "yogurt"){
         	    tTag.textContent = score+1;
 						}
     };}
