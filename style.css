@@ -7,6 +7,12 @@
 map {
   display: inline;
 }
+.services_3col:hover {
+  transform: scale(1.1);
+}
+@media screen and (max-width: 768px) {
+  #content-desktop {display: none;}  
+  }
 #backPrincipal {
   background-image: url("/recursos/backg.png");
   background-position: center;
