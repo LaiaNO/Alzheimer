@@ -7,6 +7,15 @@
 map {
   display: inline;
 }
+#backPrincipal {
+  background-image: url("/recursos/backg.png");
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  /* Do not repeat the image */
+  background-size: cover;
+  /* Resize the background image to cover the entire container */
+}
 #buttonbox{
   top: 100px;
   padding: 2pt;
