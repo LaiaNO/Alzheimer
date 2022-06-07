@@ -79,16 +79,19 @@ var createScene = function (engine) {
     cone.position.z = -0.2;
 
     // Sound
-    var introaudio = new BABYLON.Sound("", "/recursos/instructionsAudio.mp4", scene, null, {
+    var introaudio = new BABYLON.Sound("", "/recursos/welcome.mp4", scene, null, {
         autoplay: true
       });
     var path1sound = new BABYLON.Sound("", "/recursos/path1.mp4", scene, null, {
         autoplay: false
       });
-    var nothispath = new BABYLON.Sound("", "/recursos/nothispath.mp4", scene, null, {
+    var nothispath = new BABYLON.Sound("", "/recursos/distracted.mp4", scene, null, {
         autoplay: false
       });
     var notthis = new BABYLON.Sound("", "/recursos/notthis.mp4", scene, null, {
+        autoplay: false
+      });
+    var welldone = new BABYLON.Sound("", "/recursos/notthis.mp4", scene, null, {
         autoplay: false
       });
     path1soundState = false;
@@ -193,6 +196,7 @@ var createScene = function (engine) {
     //Animation
     scene.registerBeforeRender(function () {    
         //Balloon 1 intersection -- Precise = false
+        console.log(introaudio.isPlaying)
         if (cone.intersectsMesh(plan1, false)) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);          
             if (!introaudio.isPlaying && !path1sound.isPlaying && !path1soundState){
@@ -374,6 +378,7 @@ var createScene = function (engine) {
     header.id = "headerBox";
     header.textContent = "No Picked Mesh";
     buttonbox.appendChild(header);
+    
     /*Click Box - Selection
     ------------------------ */
     scene.onPointerDown = function (evt, pickResult) {
@@ -384,19 +389,11 @@ var createScene = function (engine) {
             console.dir(names);
         	if (pickResult.pickedMesh.name == "yogurt"){
         	    tTag.textContent = score+1;
-						}
+                welldone.play();
+                location.href = '/game/Levels/Level2.html';}
     };}
 
     var touch = path2.collisionsEnabled.State 
-    /*
-    scene.registerBeforeRender(function () {
-        //lloon 1 intersection -- Precise = false
-        if (cone.intersectsMesh(plan2, false)) {
-            balloon1.material.emissiveColor = new BABYLON.Color3(1, 0, 0);
-        } else {
-            balloon1.material.emissiveColor = new BABYLON.Color3(1, 1, 1);
-        }
-    });*/
 
     return scene;
 }

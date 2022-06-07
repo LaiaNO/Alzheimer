@@ -61,7 +61,7 @@ var createScene = function (engine) {
     instructions.position.y = 1.1;
     instructions.position.z = 3;
     instructions.rotation.x = -90 * Math.PI / 180;
-    instructions.material.diffuseTexture = new BABYLON.Texture("/recursos/text863.png", scene);
+    instructions.material.diffuseTexture = new BABYLON.Texture("/recursos/momfind.png", scene);
 
     BABYLON.SceneLoader.ImportMesh("", "https://assets.babylonjs.com/meshes/", "HVGirl.glb", scene, function (newMeshes, particleSystems, skeletons, animationGroups) {
         var hero = newMeshes[0];
