@@ -4,7 +4,9 @@
     height: 100%;
     touch-action: none;
 }
-
+map {
+  display: inline;
+}
 #buttonbox{
   top: 100px;
   padding: 2pt;
