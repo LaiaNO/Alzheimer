@@ -199,7 +199,7 @@ var createScene = function (engine) {
         console.log(introaudio.isPlaying)
         if (cone.intersectsMesh(plan1, false)) {
             balloon1.material.emissiveColor = new BABYLON.Color3(0, 1, 0);          
-            if (!introaudio.isPlaying && !path1sound.isPlaying && !path1soundState){
+            if (!introaudio.isPlaying && !path1soundState){
                 path1sound.play();
                 path1soundState = true}        
         } 
