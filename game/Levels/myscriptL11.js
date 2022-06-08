@@ -301,7 +301,7 @@ const createScene = async function (engine) {
 
   const plan2 = BABYLON.MeshBuilder.CreatePlane(
     "plane2",
-    { height: 2, width: 2 },
+    { height: 2.3, width: 2.3 },
     scene
   );
   plan2.position = new BABYLON.Vector3(-5.5, 1, 0);
