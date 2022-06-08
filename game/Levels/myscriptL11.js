@@ -4,6 +4,8 @@ function createBox2(scene) {
   const box = BABYLON.MeshBuilder.CreateBox("yogurt", scene);
   box.translate(new BABYLON.Vector3(-5.4, 0.5, -5), 1, BABYLON.Space.LOCAL);
   box.material = mat2;
+  box.scaling.y = 2.5;
+  box.scaling.x = 1.2;
   box.actionManager = new BABYLON.ActionManager(scene);
   box.actionManager.registerAction(
     new BABYLON.IncrementValueAction(
