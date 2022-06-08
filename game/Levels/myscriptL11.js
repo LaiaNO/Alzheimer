@@ -535,9 +535,10 @@ const createScene = async function (engine) {
       if (pickResult.pickedMesh.name == "yogurt") {
         tTag.textContent = score + 1;
         welldone.play();
-        await delay(5000);
-        console.log("Waited 5s");
-        location.href = "/game/Levels/Level2.html";
+        setTimeout(() => {
+          console.log("5 Segundo esperado");
+          location.href = "/game/Levels/Level2.html";
+        }, 5000);
       }
     }
   };
