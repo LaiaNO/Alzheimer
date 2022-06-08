@@ -34,7 +34,7 @@ var createScene = function (engine) {
     _____________________*/
 
   //Ground
-  var ground = BABYLON.MeshBuilder.CreateGround(
+  const ground = BABYLON.MeshBuilder.CreateGround(
     "ground",
     { width: 30, height: 30 },
     scene
@@ -47,7 +47,7 @@ var createScene = function (engine) {
   );
 
   //Walls
-  var wall1 = BABYLON.MeshBuilder.CreateGround(
+  const wall1 = BABYLON.MeshBuilder.CreateGround(
     "ground",
     { width: 30, height: 20 },
     scene
@@ -61,7 +61,7 @@ var createScene = function (engine) {
     scene
   );
 
-  var wall2 = BABYLON.MeshBuilder.CreateGround(
+  const wall2 = BABYLON.MeshBuilder.CreateGround(
     "ground",
     { width: 30, height: 20 },
     scene
@@ -76,7 +76,7 @@ var createScene = function (engine) {
     scene
   );
 
-  var wall3 = ground.clone("wall1");
+  const wall3 = ground.clone("wall1");
   wall3.position.x = +15;
   wall3.rotation.z = (90 * Math.PI) / 180;
   wall3.material = ground.material.clone("lowerMat");
@@ -85,7 +85,7 @@ var createScene = function (engine) {
     scene
   );
 
-  var wall4 = ground.clone("wall1");
+  const wall4 = ground.clone("wall1");
   wall4.position.x = -15;
   wall4.rotation.z = (-90 * Math.PI) / 180;
   wall4.material = ground.material.clone("lowerMat");
@@ -95,7 +95,7 @@ var createScene = function (engine) {
   );
 
   //instructions
-  var instructions = BABYLON.MeshBuilder.CreateGround(
+  const instructions = BABYLON.MeshBuilder.CreateGround(
     "ground",
     { width: 1.5, height: 2 },
     scene
@@ -349,12 +349,15 @@ var createScene = function (engine) {
 
 const canvas = document.getElementById("renderCanvasL1"); // Get the canvas element
 const engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
-const scene = createScene(engine); //Call the createScene function
-// Register a render loop to repeatedly render the scene
-engine.runRenderLoop(function () {
-  scene.render();
-});
-// Watch for browser/canvas resize events
-window.addEventListener("resize", function () {
-  engine.resize();
-});
+async function main() {
+  const scene = await createScene(engine); //Call the createScene function
+  // Register a render loop to repeatedly render the scene
+  engine.runRenderLoop(function () {
+    scene.render();
+  });
+  // Watch for browser/canvas resize events
+  window.addEventListener("resize", function () {
+    engine.resize();
+  });
+}
+main().catch(console.error);
