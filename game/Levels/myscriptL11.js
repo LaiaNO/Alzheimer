@@ -301,7 +301,7 @@ const createScene = async function (engine) {
 
   const plan2 = BABYLON.MeshBuilder.CreatePlane(
     "plane2",
-    { height: 2.3, width: 2.3 },
+    { height: 3, width: 3 },
     scene
   );
   plan2.position = new BABYLON.Vector3(-5.5, 1, 0);
@@ -310,7 +310,7 @@ const createScene = async function (engine) {
 
   const plan3 = BABYLON.MeshBuilder.CreatePlane(
     "plane3",
-    { height: 2, width: 2 },
+    { height: 3, width: 3 },
     scene
   );
   plan3.position = new BABYLON.Vector3(-5.5, 1, -2.5);
@@ -343,7 +343,8 @@ const createScene = async function (engine) {
         !introaudio.isPlaying &&
         !path1sound.isPlaying &&
         path1soundState &&
-        !nothispathState
+        !nothispathState &&
+        !cone.intersectsMesh(plan3, false)
       ) {
         nothispath.play();
         nothispathState = true;
