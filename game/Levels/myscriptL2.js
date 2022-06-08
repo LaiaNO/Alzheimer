@@ -29,16 +29,6 @@ var createScene = function (engine) {
     Math.sin(camera.angle)
   );
   scene.activeCameras.push(camera);
-  const mompickme = new BABYLON.Sound(
-    "",
-    "/recursos/mompickme.mp4",
-    scene,
-    null,
-    {
-      autoplay: true,
-    }
-  );
-  mompickme.setVolume(5);
 
   /* Set Up Scenery
     _____________________*/
